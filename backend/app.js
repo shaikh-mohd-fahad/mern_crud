@@ -7,6 +7,7 @@ import cors from "cors"
 
 const app=express();
 connectDB()
+app.use(express.json());
 app.use(cors())
 app.use("/",web_route)
 app.use("/student",student_route)
