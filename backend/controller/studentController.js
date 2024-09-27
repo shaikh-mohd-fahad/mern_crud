@@ -43,10 +43,33 @@ const getStudent=async (req,res)=>{
     res.send(getData)
 }
 const delStudent=async (req,res)=>{
-    console.log("delete", req.params.id)
+    // console.log("delete", req.params.id)
     const result=await studentModel.findByIdAndDelete(req.params.id);
     // console.log("result: ",result)
     res.send("data deleted")
 }
+const fetchEdit=async(req,res)=>{
+    // res.send("working edit")
+    try {
+        const result=await studentModel.findById(req.params.id)
+        res.json(result)
+        
+    } catch (error) {
+        console.log("erorr", error)
+    }
+}
 
-export {addData,getStudent,delStudent}
+const updateStudent=async(req,res)=>{
+    // res.send("working edit")
+    try {
+        const result=await studentModel.findByIdAndUpdate(req.params.id,{
+            username:req.body.username,
+            email:req.body.email,
+        })
+        res.json(result)
+        
+    } catch (error) {
+        console.log("erorr", error)
+    }
+}
+export {addData,getStudent,delStudent,fetchEdit,updateStudent}

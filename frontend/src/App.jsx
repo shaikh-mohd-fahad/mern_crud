@@ -44,7 +44,7 @@ function App() {
     try {
       const res=await axios.get("http://localhost:3000/student/delete/"+id)
       console.log("deleted response : ",res.data)
-      
+      getStudData();
     } catch (error) {
       console.log(error)
     }
@@ -83,7 +83,7 @@ function App() {
         <tr key={data._id}>
       <td>{data.username}</td>
       <td>{data.email}</td>
-      <td> <a href="">Edit</a>  <button onClick={()=>handleDelete(data._id)}>Delete</button></td>
+      <td> <a href={`edit/${data._id}`}>Edit</a>  <button onClick={()=>handleDelete(data._id)}>Delete</button></td>
     </tr>
         </>
       )
