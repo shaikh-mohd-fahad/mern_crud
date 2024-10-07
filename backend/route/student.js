@@ -1,12 +1,21 @@
 import express from "express"
 const student_route=express.Router();
-// import { home } from "../controller/siteController.js";
+import multer from "multer"
+import path from "path"
 import { addData,getStudent,delStudent,fetchEdit,updateStudent } from "../controller/studentController.js";
-// student_route.get("/add",addData)
-student_route.post("/add",addData)
-
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname)); // Append extension
+    },
+  });
+  
+  const upload = multer({ storage });
+student_route.post("/add",upload.single('image'),addData)
 student_route.get("/getstudent",getStudent)
-student_route.get("/delete/:id",delStudent)
+student_route.delete("/delete/:id",delStudent)
 student_route.get("/fetchedit/:id",fetchEdit)
 student_route.put("/fetchedit/:id",updateStudent)
 

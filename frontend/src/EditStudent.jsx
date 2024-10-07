@@ -2,6 +2,8 @@ import axios from 'axios';
 import React from 'react'
 import { useState,useEffect } from 'react';
 import {useParams} from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function EditStudent({id}) {
   const edit_id=useParams().id;
     const [formData,setFormData]=useState({
@@ -39,6 +41,7 @@ const handleEditFrom=async (e)=>{
     e.preventDefault();
     try {
       const updateData=await axios.put(`http://localhost:3000/student/fetchedit/${edit_id}`,formData)
+      toast.success("Student Data updated")
       console.log("update data",updateData)
     } catch (error) {
       console.log("eror: ",error)
@@ -46,7 +49,8 @@ const handleEditFrom=async (e)=>{
 }
   return (
     <  >
-      <div className="container mx-auto mt-5 shadow-md p-5 rounded-md ">
+    <ToastContainer />
+      <div className="container mx-auto mt-5 shadow-md p-5 rounded-md flex justify-center ">
       <h1 className="text-3xl">Edit Student Detail</h1>
       <form action="" onSubmit={handleEditFrom}>
         Username: <input type="text" name="username" placeholer="Enter Username" value={formData.username} className="w-96 border " onChange={handleInput}/><br/><br/>

@@ -10,5 +10,5 @@ createRoot(document.getElementById('root')).render(
       <Route path="/" element={<App />}></Route>
       <Route path="/edit/:id" element={<EditStudent />}></Route>
     </Routes>
-  </BrowserRouter>,
+  </BrowserRouter>
 )
