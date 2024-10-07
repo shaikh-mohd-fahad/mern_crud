@@ -51,7 +51,7 @@ function App() {
   const handleDelete=async (id)=>{
     try {
       const res=await axios.delete("http://localhost:3000/student/delete/"+id)
-      toast.error("Student Data Deleted")
+      toast.success("Student Data Deleted")
       getStudData();
     } catch (error) {
       console.log(error)
@@ -70,7 +70,7 @@ function App() {
   return (
     <>
     <ToastContainer />
-    <div className="container mx-auto mt-5 shadow-md p-5 rounded-md flex justify-center">
+    <div className="container mx-auto mt-5 shadow-md p-5 rounded-md flex items-center flex-col space-y-3 justify-center">
       <h1 className="text-3xl">Student SignUp</h1>
       <form action="" onSubmit={handleSignupFrom} method="post" encType="multipart/form-data">
         Username: <input type="text" name="username" placeholer="Enter Username" value={input.username} className="w-96 border " onChange={handleInput}/><br/><br/>
@@ -81,7 +81,7 @@ function App() {
 
         Password: <input type="text" name="password" placeholer="Enter Password" value={input.password} className="w-96 border " onChange={handleInput}/><br/><br/>
 
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Signup</button>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Add Student Data</button>
       </form>
     </div>
     <div className='container mx-auto mt-5 shadow-md p-5 rounded-md flex justify-center'>
@@ -105,7 +105,7 @@ function App() {
         <tr key={data._id}>
       <td>{data.username}</td>
       <td>{data.email}</td>
-      <td><img src={`http://localhost:3000/${data.image}`} alt="" /></td>
+      <td><img src={`http://localhost:3000/${data.image}`} height="200px" width="200px"  alt="" /></td>
       <td> 
       {/* <a href={`edit/${data._id}`}>Edit</a>   */}
       <Link to={`edit/${data._id}`} className='btn bg-blue-500 p-3 rounded-md m-2'>Edit</Link>  

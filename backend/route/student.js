@@ -17,7 +17,7 @@ student_route.post("/add",upload.single('image'),addData)
 student_route.get("/getstudent",getStudent)
 student_route.delete("/delete/:id",delStudent)
 student_route.get("/fetchedit/:id",fetchEdit)
-student_route.put("/fetchedit/:id",updateStudent)
+student_route.put("/fetchedit/:id",upload.single('image'),updateStudent)
 
 
 

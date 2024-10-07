@@ -1,4 +1,7 @@
 import { studentModel } from "../model/student.js"
+import fs from 'fs';
+import { join} from 'path'
+
 // ******* post method *********
 
 const addData=async (req,res)=>{
@@ -21,7 +24,18 @@ const getStudent=async (req,res)=>{
     res.send(getData)
 }
 const delStudent=async (req,res)=>{
-    const result=await studentModel.findByIdAndDelete(req.params.id);
+    const id=req.params.id
+    const student = await studentModel.findById(id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    const imagePath = join(process.cwd(), student.image); 
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+        console.error('Failed to delete image:', err);
+      }
+    });
+    const result=await studentModel.findByIdAndDelete(id);
     res.send("data deleted")
 }
 const fetchEdit=async(req,res)=>{
@@ -36,10 +50,13 @@ const fetchEdit=async(req,res)=>{
 
 const updateStudent=async(req,res)=>{
     try {
-        const result=await studentModel.findByIdAndUpdate(req.params.id,{
-            username:req.body.username,
-            email:req.body.email,
-        })
+        const result=await studentModel.findById(req.params.id);
+        result.email=req.body.email;
+        result.username=req.body.username;
+        if(req.file){
+            result.image=req.file.path;
+        }
+        await result.save();
         res.json(result)
         
     } catch (error) {
